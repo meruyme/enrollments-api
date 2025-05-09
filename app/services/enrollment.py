@@ -2,8 +2,10 @@ from typing import List
 
 from fastapi import HTTPException, status
 
+from app.core.constants import EnrollmentStatus
 from app.repositories.enrollment import EnrollmentRepository
 from app.schemas.enrollment import EnrollmentCreate, EnrollmentRead
+from app.schemas.filters import EnrollmentFilter
 
 
 class EnrollmentService:
@@ -11,6 +13,12 @@ class EnrollmentService:
         self.repository = enrollment_repository
 
     def create(self, enrollment_payload: EnrollmentCreate, username: str) -> EnrollmentRead:
+        if self.__exists_enrollment_for_cpf(enrollment_payload):
+            raise HTTPException(
+                detail="This CPF already has an enrollment in queue or accepted.",
+                status_code=status.HTTP_400_BAD_REQUEST,
+            )
+
         return self.repository.create(enrollment_payload, username)
 
     def get(self, enrollment_id: str, username: str) -> EnrollmentRead:
@@ -23,5 +31,12 @@ class EnrollmentService:
 
         return enrollment
 
-    def list(self, username: str) -> List[EnrollmentRead]:
-        return self.repository.list(username)
+    def list(self, username: str, filter_query: EnrollmentFilter) -> List[EnrollmentRead]:
+        return self.repository.list(username, filter_query)
+
+    def __exists_enrollment_for_cpf(self, enrollment_payload: EnrollmentCreate) -> bool:
+        filter_query = EnrollmentFilter(
+            cpf=enrollment_payload.cpf,
+            status=[EnrollmentStatus.IN_QUEUE, EnrollmentStatus.ACCEPTED],
+        )
+        return bool(self.repository.list(filter_query=filter_query))
