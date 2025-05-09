@@ -1,9 +1,10 @@
-from typing import List
+from typing import List, Annotated
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Query
 
 from app.dependencies import get_enrollment_service
 from app.schemas.enrollment import EnrollmentRead, EnrollmentCreate
+from app.schemas.filters import EnrollmentFilter
 from app.services.enrollment import EnrollmentService
 from app.auth import get_current_username
 
@@ -45,7 +46,8 @@ def get_enrollment(
     status_code=status.HTTP_200_OK,
 )
 def list_enrollment(
+    filter_query: Annotated[EnrollmentFilter, Query()],
     service: EnrollmentService = Depends(get_enrollment_service),
     current_username: str = Depends(get_current_username),
 ):
-    return service.list(current_username)
+    return service.list(current_username, filter_query)

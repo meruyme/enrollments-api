@@ -7,6 +7,7 @@ from pymongo.synchronous.database import Database
 
 from app.core.constants import EnrollmentStatus
 from app.schemas.enrollment import EnrollmentCreate, EnrollmentRead
+from app.schemas.filters import EnrollmentFilter
 
 
 class EnrollmentRepository:
@@ -33,6 +34,25 @@ class EnrollmentRepository:
 
         return EnrollmentRead(**enrollment)
 
-    def list(self, username: str) -> List[EnrollmentRead]:
-        enrollments = self.collection.find({"requested_by": username})
+    def list(self, username: str = None, filter_query: EnrollmentFilter = None) -> List[EnrollmentRead]:
+        initial_filter = {"requested_by": username} if username else None
+        filters = self.__build_filter(filter_query, initial_filter)
+        enrollments = self.collection.find(filters)
         return TypeAdapter(List[EnrollmentRead]).validate_python(enrollments)
+
+    @staticmethod
+    def __build_filter(filter_query: EnrollmentFilter, initial_filter: dict = None) -> dict:
+        filters = initial_filter or {}
+        if filter_query:
+            if filter_query.cpf:
+                filters["cpf"] = filter_query.cpf,
+            if filter_query.status:
+                filters["status"] = {
+                    "$in": filter_query.status,
+                }
+            if filter_query.name:
+                filters["name"] = {
+                    "$regex": filter_query.name,
+                    "$options": "i",
+                }
+        return filters
