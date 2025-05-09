@@ -6,7 +6,7 @@ class Environment(str, Enum):
     TEST = "test"
 
 
-class EnrollmentStatus(int, Enum):
-    IN_QUEUE = 1
-    ACCEPTED = 2
-    REFUSED = 3
+class EnrollmentStatus(str, Enum):
+    IN_QUEUE = "in_queue"
+    ACCEPTED = "accepted"
+    REFUSED = "refused"
