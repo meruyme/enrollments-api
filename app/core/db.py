@@ -14,4 +14,4 @@ class DatabaseProvider:
             client = MongoClientMock()
         else:
             client = MongoClient(settings.mongo_host)
-        return client.template_database
+        return client[settings.database_name]

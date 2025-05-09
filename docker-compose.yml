@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   api:
-    container_name: template-api
+    container_name: enrollments-api
     build:
       context: ./
       dockerfile: Dockerfile
@@ -12,9 +12,26 @@ services:
     ports:
       - "8000:8000"
     depends_on:
+      - age-group-api
       - mongo
     networks:
-      - template-api-network
+      - enrollments-network
+
+  age-group-api:
+    container_name: age-group-api
+    build:
+      context: ${AGE_GROUP_PROJECT_PATH}
+      dockerfile: Dockerfile
+    volumes:
+      - ${AGE_GROUP_PROJECT_PATH}:/code
+    env_file:
+      - ${AGE_GROUP_PROJECT_PATH}/.env
+    ports:
+      - "8001:8001"
+    depends_on:
+      - mongo
+    networks:
+      - enrollments-network
 
   mongo:
     container_name: mongo
@@ -25,7 +42,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - template-api-network
+      - enrollments-network
 
   mongo-express:
     container_name: mongo-express
@@ -39,11 +56,11 @@ services:
     depends_on:
       - mongo
     networks:
-      - template-api-network
+      - enrollments-network
 
 volumes:
   mongo_data:
 
 networks:
-    template-api-network:
+    enrollments-network:
       driver: bridge

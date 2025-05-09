@@ -1,5 +1,5 @@
 [project]
-name = "template-api"
+name = "enrollments-api"
 version = "1"
 requires-python = ">=3.9"
 dependencies = [
