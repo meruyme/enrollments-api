@@ -2,7 +2,7 @@ from typing import Annotated
 
 from pydantic import BeforeValidator, AfterValidator, Field
 
-from app.utils import validate_cpf
+from app.utils.validators import validate_cpf
 
 PyObjectId = Annotated[str, Field(alias="_id"), BeforeValidator(str)]
 
