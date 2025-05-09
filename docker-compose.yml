@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: template-api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - .:/code
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+    networks:
+      - template-api-network
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - template-api-network
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      - mongo
+    networks:
+      - template-api-network
+
+volumes:
+  mongo_data:
+
+networks:
+    template-api-network:
+      driver: bridge

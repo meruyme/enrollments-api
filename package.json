@@ -1,0 +1,21 @@
+{
+    "name": "repository-name",
+    "version": "1.0.0",
+    "private": true,
+    "description": "REPOSITORY DESCRIPTION",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified yet\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/letrustech/REPOSITORY-NAME.git"
+    },
+    "keywords": [],
+    "author": "Letrus",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/letrustech/REPOSITORY-NAME/issues"
+    },
+    "homepage": "https://github.com/letrustech/REPOSITORY-NAME#readme"
+  }
