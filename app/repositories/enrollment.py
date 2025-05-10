@@ -27,23 +27,31 @@ class EnrollmentRepository:
         return EnrollmentRead(id=str(enrollment.inserted_id), **enrollment_data)
 
     def get(self, enrollment_id: str, username: str) -> Optional[EnrollmentRead]:
-        enrollment = self.collection.find_one({"_id": ObjectId(enrollment_id), "requested_by": username})
+        filter_query = EnrollmentFilter(
+            id=enrollment_id,
+            username=username,
+        )
+        filters = self.__build_filter(filter_query)
+        enrollment = self.collection.find_one(filters)
 
         if not enrollment:
             return None
 
         return EnrollmentRead(**enrollment)
 
-    def list(self, username: str = None, filter_query: EnrollmentFilter = None) -> List[EnrollmentRead]:
-        initial_filter = {"requested_by": username} if username else None
-        filters = self.__build_filter(filter_query, initial_filter)
+    def list(self, filter_query: EnrollmentFilter = None) -> List[EnrollmentRead]:
+        filters = self.__build_filter(filter_query)
         enrollments = self.collection.find(filters)
         return TypeAdapter(List[EnrollmentRead]).validate_python(enrollments)
 
     @staticmethod
-    def __build_filter(filter_query: EnrollmentFilter, initial_filter: dict = None) -> dict:
-        filters = initial_filter or {}
+    def __build_filter(filter_query: EnrollmentFilter) -> dict:
+        filters = {}
         if filter_query:
+            if filter_query.id:
+                filters["_id"] = ObjectId(filter_query.id)
+            if filter_query.username:
+                filters["requested_by"] = filter_query.username
             if filter_query.cpf:
                 filters["cpf"] = filter_query.cpf,
             if filter_query.status:

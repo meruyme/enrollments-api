@@ -32,11 +32,12 @@ class EnrollmentService:
         return enrollment
 
     def list(self, username: str, filter_query: EnrollmentFilter) -> List[EnrollmentRead]:
-        return self.repository.list(username, filter_query)
+        filter_query.username = username
+        return self.repository.list(filter_query)
 
     def __exists_enrollment_for_cpf(self, enrollment_payload: EnrollmentCreate) -> bool:
         filter_query = EnrollmentFilter(
             cpf=enrollment_payload.cpf,
             status=[EnrollmentStatus.IN_QUEUE, EnrollmentStatus.ACCEPTED],
         )
-        return bool(self.repository.list(filter_query=filter_query))
+        return bool(self.repository.list(filter_query))
