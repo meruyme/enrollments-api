@@ -3,6 +3,7 @@ from typing import List
 from fastapi import HTTPException, status
 
 from app.core.constants import EnrollmentStatus
+from app.core.rabbitmq import RabbitMQProvider
 from app.repositories.enrollment import EnrollmentRepository
 from app.schemas.enrollment import EnrollmentCreate, EnrollmentRead
 from app.schemas.filters import EnrollmentFilter
@@ -19,7 +20,11 @@ class EnrollmentService:
                 status_code=status.HTTP_400_BAD_REQUEST,
             )
 
-        return self.repository.create(enrollment_payload, username)
+        enrollment = self.repository.create(enrollment_payload, username)
+
+        RabbitMQProvider().publish_message(enrollment.id)
+
+        return enrollment
 
     def get(self, enrollment_id: str, username: str) -> EnrollmentRead:
         enrollment = self.repository.get(enrollment_id, username)

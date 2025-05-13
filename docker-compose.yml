@@ -14,6 +14,7 @@ services:
     depends_on:
       - age-group-api
       - mongo
+      - rabbitmq
     networks:
       - enrollments-network
 
@@ -27,7 +28,7 @@ services:
     env_file:
       - ${AGE_GROUP_PROJECT_PATH}/.env
     ports:
-      - "8001:8001"
+      - "8001:8000"
     depends_on:
       - mongo
     networks:
@@ -58,8 +59,20 @@ services:
     networks:
       - enrollments-network
 
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - enrollments-network
+
 volumes:
   mongo_data:
+  rabbitmq_data:
 
 networks:
     enrollments-network:

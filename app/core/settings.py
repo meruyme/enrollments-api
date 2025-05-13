@@ -19,4 +19,7 @@ class Settings(BaseSettings):
     age_group_api_username: str
     age_group_api_password: str
 
+    rabbit_host: str
+    rabbit_queue_name: str
+
     environment: str = Environment.LOCAL
