@@ -53,7 +53,7 @@ class EnrollmentRepository:
             if filter_query.username:
                 filters["requested_by"] = filter_query.username
             if filter_query.cpf:
-                filters["cpf"] = filter_query.cpf,
+                filters["cpf"] = filter_query.cpf
             if filter_query.status:
                 filters["status"] = {
                     "$in": filter_query.status,
