@@ -15,7 +15,7 @@ class RabbitMQProvider:
     def get_channel(self) -> BlockingChannel:
         self.__connection = BlockingConnection(URLParameters(settings.rabbit_host))
         channel = self.__connection.channel()
-        channel.queue_declare(queue=settings.rabbit_queue_name, durable=True)
+        channel.queue_declare(queue=self.get_queue_name(), durable=True)
 
         return channel
 
@@ -27,7 +27,7 @@ class RabbitMQProvider:
         channel = self.get_channel()
         channel.basic_publish(
             exchange="",
-            routing_key=settings.rabbit_queue_name,
+            routing_key=self.get_queue_name(),
             body=message_data.encode("utf-8"),
         )
         self.close_connection()
