@@ -60,3 +60,24 @@ def enrollment():
     enrollment_data.update({"_id": str(enrollment.inserted_id)})
 
     return enrollment_data
+
+
+@pytest.fixture
+def mock_channel():
+    class MockChannel:
+        def basic_ack(self, delivery_tag: int):
+            return
+
+        def basic_nack(self, delivery_tag: int):
+            return
+
+    return MockChannel()
+
+
+@pytest.fixture
+def mock_method():
+    class MockMethod:
+        def __init__(self, delivery_tag=1):
+            self.delivery_tag = delivery_tag
+
+    return MockMethod()
