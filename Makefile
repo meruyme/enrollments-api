@@ -11,4 +11,7 @@ status-processor:
 	docker compose exec api python processor/processor.py
 
 local-test:
-	echo "Implement me!"
+	docker compose exec api pytest
+
+local-age-group-test:
+	docker compose exec age-group-api pytest
