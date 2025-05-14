@@ -11,7 +11,7 @@ A API tem por objetivo realizar o gerenciamento de inscrições. Além disso, ta
 A API foi desenvolvida usando Python 3.9.6, com o framework FastAPI. O banco de dados escolhido foi o MongoDB. Para o gerenciamento das dependências do projeto, foi escolhido o [pip-tools](https://pypi.org/project/pip-tools/). Para o envio de mensagens entre serviços, foi utilizado o RabbitMQ.
 
 ### Dependências
-Esse projeto é dependente da [Age Group API](https://github.com/meruyme/age-group-api). Para o funcionamento correto, clone o repositório e siga as instruções de execução no README.md do projeto.
+Esse projeto é dependente da [Age Group API](https://github.com/meruyme/age-group-api). Para o funcionamento correto, clone o repositório e siga as instruções de execução no README.md do projeto Age Group API antes de executar esse projeto.
 
 ### Instruções de execução
 
