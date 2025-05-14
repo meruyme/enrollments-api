@@ -10,10 +10,5 @@ router.include_router(v1.router)
 
 
 @router.get("/")
-async def docs_redirect():
+def docs_redirect():
     return RedirectResponse(url=settings.prefix + "/docs")
-
-
-@router.get("/healthcheck")
-async def healthcheck():
-    return JSONResponse({"message": "OK"})
