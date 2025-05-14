@@ -26,11 +26,7 @@ class EnrollmentRepository:
 
         return EnrollmentRead(id=str(enrollment.inserted_id), **enrollment_data)
 
-    def get(self, enrollment_id: str, username: str) -> Optional[EnrollmentRead]:
-        filter_query = EnrollmentFilter(
-            id=enrollment_id,
-            username=username,
-        )
+    def get(self, filter_query: EnrollmentFilter) -> Optional[EnrollmentRead]:
         filters = self.__build_filter(filter_query)
         enrollment = self.collection.find_one(filters)
 
