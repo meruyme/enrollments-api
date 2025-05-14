@@ -8,12 +8,10 @@ A API tem por objetivo realizar o gerenciamento de inscrições. Além disso, ta
 
 ### Tecnologias
 
-A API foi desenvolvida usando Python 3.9.6, com o framework FastAPI. O banco de dados escolhido foi o MongoDB. Para o gerenciamento das dependências do projeto, foi escolhido o [pip-tools](https://pypi.org/project/pip-tools/). Para o envio de mensagens, foi utilizado o RabbitMQ.
+A API foi desenvolvida usando Python 3.9.6, com o framework FastAPI. O banco de dados escolhido foi o MongoDB. Para o gerenciamento das dependências do projeto, foi escolhido o [pip-tools](https://pypi.org/project/pip-tools/). Para o envio de mensagens entre serviços, foi utilizado o RabbitMQ.
 
 ### Dependências
-Esse projeto é dependente da [Age Group API](https://github.com/meruyme/age-group-api). Para o funcionamento correto, clone o repositório e crie um arquivo .env na raiz do projeto para armazenar as variáveis de ambiente necessárias. 
-
-Não é necessária a criação dos containers utilizando o docker-compose.yml do projeto Age group.
+Esse projeto é dependente da [Age Group API](https://github.com/meruyme/age-group-api). Para o funcionamento correto, clone o repositório e siga as instruções de execução no README.md do projeto.
 
 ### Instruções de execução
 
@@ -38,4 +36,4 @@ O script irá receber as mensagens enviadas após criação das inscrições e a
 Para a criação dos testes, foi utilizada a biblioteca Pytest. 
 
 Para executá-los, utilize o seguinte comando:
-> make local-enrollment-test
+> make local-test
