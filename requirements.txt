@@ -30,6 +30,7 @@ colorama==0.4.6
     # via
     #   build
     #   click
+    #   pytest
     #   uvicorn
 dnspython==2.7.0
     # via
@@ -38,7 +39,9 @@ dnspython==2.7.0
 email-validator==2.2.0
     # via fastapi
 exceptiongroup==1.2.2
-    # via anyio
+    # via
+    #   anyio
+    #   pytest
 fastapi[standard]==0.115.12
     # via enrollments-api (pyproject.toml)
 fastapi-cli[standard]==0.0.7
@@ -61,6 +64,8 @@ idna==3.10
     #   requests
 importlib-metadata==8.7.0
     # via build
+iniconfig==2.1.0
+    # via pytest
 jinja2==3.1.6
     # via fastapi
 markdown-it-py==3.0.0
@@ -75,10 +80,13 @@ packaging==25.0
     # via
     #   build
     #   mongomock
+    #   pytest
 pika==1.3.2
     # via enrollments-api (pyproject.toml)
 pip-tools==7.4.1
     # via enrollments-api (pyproject.toml)
+pluggy==1.5.0
+    # via pytest
 pydantic==2.11.4
     # via
     #   fastapi
@@ -95,6 +103,8 @@ pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
+pytest==8.3.5
+    # via enrollments-api (pyproject.toml)
 python-dotenv==1.1.0
     # via
     #   pydantic-settings
@@ -125,6 +135,7 @@ tomli==2.2.1
     # via
     #   build
     #   pip-tools
+    #   pytest
 typer==0.15.3
     # via fastapi-cli
 typing-extensions==4.13.2
