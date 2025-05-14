@@ -15,4 +15,11 @@ class Settings(BaseSettings):
     mongo_port: int
     database_name: str
 
+    age_group_api_base_url: str
+    age_group_api_username: str
+    age_group_api_password: str
+
+    rabbit_host: str
+    rabbit_queue_name: str
+
     environment: str = Environment.LOCAL
