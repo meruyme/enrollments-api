@@ -40,6 +40,19 @@ class EnrollmentRepository:
         enrollments = self.collection.find(filters)
         return TypeAdapter(List[EnrollmentRead]).validate_python(enrollments)
 
+    def update_status(self, enrollment_id: str, status: EnrollmentStatus) -> bool:
+        update_result = self.collection.update_one(
+            {"_id": ObjectId(enrollment_id)},
+            {
+                "$set": {
+                    "status": status,
+                    "finished_at": datetime.now(),
+                }
+            }
+        )
+
+        return update_result.modified_count > 0
+
     @staticmethod
     def __build_filter(filter_query: EnrollmentFilter) -> dict:
         filters = {}
