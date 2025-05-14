@@ -1,18 +1,14 @@
-nothing:
+update-deps:
+	docker compose exec api python -m piptools compile -o requirements.txt pyproject.toml
 
-install:
-	python -m pip install --upgrade pip
-	python -m pip install -r requirements.txt
+install-deps:
+	docker compose exec api pip-sync requirements.txt
 
-devinstall:
-	make install
-	python -m pip install -r requirements_dev.txt
+local-up:
+	docker compose up -d
 
-run:
-	PYTHONPATH=. python app/main.py
+status-processor:
+	docker compose exec api python processor/processor.py
 
-dockup:
-	docker-compose up
-
-unittest:
+local-test:
 	echo "Implement me!"

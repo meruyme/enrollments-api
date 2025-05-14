@@ -10,7 +10,7 @@ from app.schemas.filters import EnrollmentFilter
 
 
 logging.basicConfig(
-    filename="consumer.log",
+    filename="processor.log",
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
