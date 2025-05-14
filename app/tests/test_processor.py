@@ -8,7 +8,9 @@ from app.core.constants import EnrollmentStatus
 from processor.processor import process_enrollment
 
 
-def test_accept_enrollment(enrollment: dict, mock_channel, mock_method, monkeypatch):
+def test_accept_enrollment(
+    enrollment: dict, mock_channel, mock_method, sleepless, monkeypatch
+):
     mock_age_group = Mock(
         return_value=[
             {
@@ -34,7 +36,9 @@ def test_accept_enrollment(enrollment: dict, mock_channel, mock_method, monkeypa
     assert new_enrollment["finished_at"] is not None
 
 
-def test_refuse_enrollment_with_invalid_age(enrollment: dict, mock_channel, mock_method, monkeypatch):
+def test_refuse_enrollment_with_invalid_age(
+    enrollment: dict, mock_channel, mock_method, sleepless, monkeypatch
+):
     mock_age_group = Mock(
         return_value=[]
     )

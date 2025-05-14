@@ -1,12 +1,11 @@
-from datetime import datetime
-
+import time
 import pytest
 import os
 
+from datetime import datetime
 from fastapi.testclient import TestClient
 
 from app.core.constants import Environment, EnrollmentStatus
-from app.core.rabbitmq import RabbitMQProvider
 from app.main import app
 from app.core.db import DatabaseProvider
 
@@ -81,3 +80,11 @@ def mock_method():
             self.delivery_tag = delivery_tag
 
     return MockMethod()
+
+
+@pytest.fixture
+def sleepless(monkeypatch):
+    def sleep(seconds):
+        pass
+
+    monkeypatch.setattr(time, "sleep", sleep)
