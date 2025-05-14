@@ -4,6 +4,7 @@ ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
 ENV TZ="America/Recife"
+ENV PYTHONPATH="/code"
 
 WORKDIR /code
 RUN python3 -m venv /code/venv
