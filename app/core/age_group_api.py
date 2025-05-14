@@ -5,7 +5,7 @@ from app.utils.external_requests import external_get_request
 settings = Settings()
 
 
-class AgeGroupApiClient:
+class AgeGroupAPIClient:
 
     @staticmethod
     def get_age_groups_by_age(age: int) -> list:
