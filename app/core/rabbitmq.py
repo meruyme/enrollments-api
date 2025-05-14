@@ -8,10 +8,14 @@ settings = Settings()
 class RabbitMQProvider:
     __connection: BlockingConnection
 
+    @staticmethod
+    def get_queue_name() -> str:
+        return settings.rabbit_queue_name
+
     def get_channel(self) -> BlockingChannel:
         self.__connection = BlockingConnection(URLParameters(settings.rabbit_host))
         channel = self.__connection.channel()
-        channel.queue_declare(queue=settings.rabbit_queue_name)
+        channel.queue_declare(queue=settings.rabbit_queue_name, durable=True)
 
         return channel
 
