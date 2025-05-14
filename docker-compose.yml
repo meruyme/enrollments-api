@@ -12,50 +12,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - age-group-api
-      - mongo
       - rabbitmq
-    networks:
-      - enrollments-network
-
-  age-group-api:
-    container_name: age-group-api
-    build:
-      context: ${AGE_GROUP_PROJECT_PATH}
-      dockerfile: Dockerfile
-    volumes:
-      - ${AGE_GROUP_PROJECT_PATH}:/code
-    env_file:
-      - ${AGE_GROUP_PROJECT_PATH}/.env
-    ports:
-      - "8001:8001"
-    depends_on:
-      - mongo
-    networks:
-      - enrollments-network
-
-  mongo:
-    container_name: mongo
-    image: mongo
-    restart: always
-    volumes:
-      - mongo_data:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - enrollments-network
-
-  mongo-express:
-    container_name: mongo-express
-    image: mongo-express
-    restart: always
-    ports:
-      - "8081:8081"
-    environment:
-      ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_BASICAUTH: false
-    depends_on:
-      - mongo
     networks:
       - enrollments-network
 
@@ -71,9 +28,8 @@ services:
       - enrollments-network
 
 volumes:
-  mongo_data:
   rabbitmq_data:
 
 networks:
     enrollments-network:
-      driver: bridge
+      external: true

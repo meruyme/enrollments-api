@@ -38,4 +38,4 @@ O script irá receber as mensagens enviadas após criação das inscrições e a
 Para a criação dos testes, foi utilizada a biblioteca Pytest. 
 
 Para executá-los, utilize o seguinte comando:
-> make local-test
+> make local-enrollment-test

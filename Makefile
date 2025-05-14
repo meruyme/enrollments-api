@@ -12,6 +12,3 @@ status-processor:
 
 local-test:
 	docker compose exec api pytest
-
-local-age-group-test:
-	docker compose exec age-group-api pytest
