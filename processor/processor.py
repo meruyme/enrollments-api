@@ -26,10 +26,7 @@ def process_enrollment(ch, method, properties, body):
 
     time.sleep(2)
 
-    filter_query = EnrollmentFilter(
-        id=enrollment_id,
-    )
-    enrollment = repository.get(filter_query)
+    enrollment = repository.get(enrollment_id)
 
     if not enrollment:
         logger.error(f"Enrollment ID {enrollment_id}: Enrollment not found.")

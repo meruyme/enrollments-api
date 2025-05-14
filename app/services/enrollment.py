@@ -27,11 +27,7 @@ class EnrollmentService:
         return enrollment
 
     def get(self, enrollment_id: str, username: str) -> EnrollmentRead:
-        filter_query = EnrollmentFilter(
-            id=enrollment_id,
-            username=username,
-        )
-        enrollment = self.repository.get(filter_query)
+        enrollment = self.repository.get(enrollment_id, username)
 
         if not enrollment:
             raise HTTPException(

@@ -26,8 +26,12 @@ class EnrollmentRepository:
 
         return EnrollmentRead(id=str(enrollment.inserted_id), **enrollment_data)
 
-    def get(self, filter_query: EnrollmentFilter) -> Optional[EnrollmentRead]:
-        filters = self.__build_filter(filter_query)
+    def get(self, enrollment_id: str, username: str = None) -> Optional[EnrollmentRead]:
+        filters = {"_id": ObjectId(enrollment_id)}
+
+        if username:
+            filters["requested_by"] = username
+
         enrollment = self.collection.find_one(filters)
 
         if not enrollment:
@@ -57,8 +61,6 @@ class EnrollmentRepository:
     def __build_filter(filter_query: EnrollmentFilter) -> dict:
         filters = {}
         if filter_query:
-            if filter_query.id:
-                filters["_id"] = ObjectId(filter_query.id)
             if filter_query.username:
                 filters["requested_by"] = filter_query.username
             if filter_query.cpf:
