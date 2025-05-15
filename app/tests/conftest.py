@@ -1,16 +1,12 @@
 import time
 import pytest
-import os
 
 from datetime import datetime
 from fastapi.testclient import TestClient
 
-from app.core.constants import Environment, EnrollmentStatus
+from app.core.constants import EnrollmentStatus
 from app.main import app
 from app.core.db import DatabaseProvider
-
-
-os.environ["ENVIRONMENT"] = Environment.TEST
 
 
 def pytest_configure():
@@ -26,8 +22,17 @@ def client():
 
 
 @pytest.fixture(autouse=True)
-def setup_test_database():
-    db = DatabaseProvider.get_database()
+def setup_test_database(monkeypatch):
+    def database():
+        return pytest.db
+
+    monkeypatch.setattr(
+        DatabaseProvider,
+        "get_database",
+        database,
+    )
+
+    db = pytest.db
     db.drop_collection("enrollments")
     yield
     db.drop_collection("enrollments")

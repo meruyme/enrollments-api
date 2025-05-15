@@ -104,6 +104,10 @@ pyproject-hooks==1.2.0
     #   build
     #   pip-tools
 pytest==8.3.5
+    # via
+    #   enrollments-api (pyproject.toml)
+    #   pytest-env
+pytest-env==1.1.5
     # via enrollments-api (pyproject.toml)
 python-dotenv==1.1.0
     # via
@@ -136,6 +140,7 @@ tomli==2.2.1
     #   build
     #   pip-tools
     #   pytest
+    #   pytest-env
 typer==0.15.3
     # via fastapi-cli
 typing-extensions==4.13.2
